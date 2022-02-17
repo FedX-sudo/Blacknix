@@ -1,0 +1,46 @@
+diff --git a/0trace.sh b/0trace.sh
+index 81ed103..e6459a2 100755
+--- a/0trace.sh
++++ b/0trace.sh
+@@ -9,17 +9,17 @@ if [ "$2" = "" ]; then
+   exit 1
+ fi
+ 
+-if [ ! -x /bin/usleep ]; then
+-  echo "[-] /bin/usleep not found on this system, sorry." 1>&2
+-  exit 1
+-fi
++#if [ ! -x /bin/usleep ]; then
++#  echo "[-] /bin/usleep not found on this system, sorry." 1>&2
++#  exit 1
++#fi
+ 
+ if [ ! "`uname`" = "Linux" ]; then
+   echo "[-] WARNING: Only Linux is believed to work fine with this utility." 1>&2
+ fi
+ 
+-make sendprobe >/dev/null
+-test -f ./sendprobe || exit 1
++#make sendprobe >/dev/null
++#test -f ./sendprobe || exit 1
+ 
+ echo "0trace v0.01 PoC by <lcamtuf@coredump.cx>"
+ 
+@@ -44,7 +44,7 @@ WAITTIME=0
+ while [ "$WAITTIME" -lt "80" ]; do
+   /usr/sbin/tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T-2" 2>/dev/null &
+   TPID="$!"
+-  usleep 100000
++  sleep 100000
+ 
+   while kill -0 "$TPID" 2>/dev/null; do
+     WAITING=$[WAITING+1]
+@@ -52,7 +52,7 @@ while [ "$WAITTIME" -lt "80" ]; do
+       kill "$TPID" 2>/dev/null
+       break
+     fi
+-    usleep 100000
++    sleep 100000
+   done
+   
+   test -s "$T-2" || break
