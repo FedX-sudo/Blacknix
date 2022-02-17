@@ -15,6 +15,8 @@
   overlays = import ./overlays; # nixpkgs overlays
 
   zero_trace = pkgs.callPackage ./pkgs/0trace { };
+
+  distrobox = pkgs.callPackage ./pkgs/distrobox { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
