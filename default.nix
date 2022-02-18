@@ -17,6 +17,12 @@
   zero_trace = pkgs.callPackage ./pkgs/0trace { };
 
   aesfix = pkgs.callPackage ./pkgs/aesfix { };
+
+  aeskeyfind = pkgs.callPackage ./pkgs/aeskeyfind { };
+
+  beef-xss = pkgs.callPackage ./pkgs/Beef-Xss { };
+
+  distrobox = pkgs.callPackage ./pkgs/distrobox { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }

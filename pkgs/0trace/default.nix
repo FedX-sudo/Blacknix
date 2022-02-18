@@ -1,16 +1,17 @@
-{ stdenv, fetchgit, tcpdump, lib, makeWrapper }:
+{ stdenv, fetchurl, tcpdump, coreutils, lib, makeWrapper }:
 
 let
   runtimePaths = [
     tcpdump
+    coreutils
   ];
 in
 
 stdenv.mkDerivation rec {
   name = "0trace";
-  src = fetchgit {
-    url = "https://gitlab.com/kalilinux/packages/0trace.git";
-    sha256 = "sha256-T+8GDaqnzwgo8LIk9S6wDV/F8M+PI08GefzRJm2t7Mg=";
+  src = fetchurl {
+    url = "http://lcamtuf.coredump.cx/soft/0trace.tgz";
+    sha256 = "sha256-vvJRC3YrCx8L3bkmH/SL1YYGrvPyADB9ALuR2lF78CQ=";
   };
   patches = [
     ./0trace.patch
