@@ -15,17 +15,19 @@ in stdenv.mkDerivation rec {
     rev = version;
     sha256 = "sha256-3rWbVN0qLjusajz+CC+yyWld1QaOuo4bVERgzD547DM=";
   };
-  nativeBuildInputs = [ ruby ];
+  patches = [ ./beef.patch ];
+  nativeBuildInputs = [ gems ruby ];
   installPhase = ''
     mkdir -p $out/{bin,share/beef}
     cp -r * $out/share/beef
     bin=$out/bin/beef
-# we are using bundle exec to start in the bundled environment
+    # we are using bundle exec to start in the bundled environment
     cat > $bin <<EOF
-#!/bin/sh -e
-exec ${gems}/bin/bundle exec ${ruby}/bin/ruby $out/share/beef/beef "\$@"
-EOF
+    #!/bin/sh -e
+    exec ${gems}/bin/bundle exec ${ruby}/bin/ruby $out/share/beef/beef "\$@"
+    EOF
     chmod +x $bin
   '';
+
   
 }

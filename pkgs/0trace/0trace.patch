@@ -1,5 +1,5 @@
 diff --git a/0trace.sh b/0trace.sh
-index 81ed103..e6459a2 100755
+index 81ed103..e7e6b09 100755
 --- a/0trace.sh
 +++ b/0trace.sh
 @@ -9,17 +9,17 @@ if [ "$2" = "" ]; then
@@ -26,9 +26,21 @@ index 81ed103..e6459a2 100755
  
  echo "0trace v0.01 PoC by <lcamtuf@coredump.cx>"
  
-@@ -44,7 +44,7 @@ WAITTIME=0
+@@ -28,7 +28,7 @@ test "$3" = "" || RULE="$RULE and src port $3"
+ 
+ echo "[+] Waiting for traffic from target on $1..."
+ 
+-/usr/sbin/tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T" 2>/dev/null
++tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T" 2>/dev/null
+ 
+ if [ ! -s "$T" ]; then
+   echo "[-] Something went wrong with tcpdump (check parameters)."
+@@ -42,9 +42,9 @@ WAITING=0
+ WAITTIME=0
+ 
  while [ "$WAITTIME" -lt "80" ]; do
-   /usr/sbin/tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T-2" 2>/dev/null &
+-  /usr/sbin/tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T-2" 2>/dev/null &
++  tcpdump -c 1 -s 200 -S -q -i "$1" -n -x "$RULE" >"$T-2" 2>/dev/null &
    TPID="$!"
 -  usleep 100000
 +  sleep 100000
@@ -44,3 +56,12 @@ index 81ed103..e6459a2 100755
    done
    
    test -s "$T-2" || break
+@@ -80,7 +80,7 @@ echo "[+] Target acquired: $SADDR:$SPORT -> $DADDR:$DPORT ($SEQ/$ACK)."
+ 
+ echo "[+] Setting up a sniffer..."
+ 
+-/usr/sbin/tcpdump -l -s 200 -S -q -i "$1" -n -x "icmp or ($RULE)" >"$T" 2>/dev/null &
++tcpdump -l -s 200 -S -q -i "$1" -n -x "icmp or ($RULE)" >"$T" 2>/dev/null &
+ TPID="$!"
+ 
+ echo "[+] Sending probes..."

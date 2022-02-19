@@ -1,0 +1,25 @@
+diff --git a/config.yaml b/config.yaml
+index 2bc9b9ff..e887e1ec 100644
+--- a/config.yaml
++++ b/config.yaml
+@@ -8,9 +8,9 @@
+ beef:
+     version: '0.5.4.0'
+     # More verbose messages (server-side)
+-    debug: false
++    debug: true
+     # More verbose messages (client-side)
+-    client_debug: false
++    client_debug: true
+     # Used for generating secure tokens
+     crypto_default_value_length: 80
+ 
+@@ -18,7 +18,7 @@ beef:
+     # Used by both the RESTful API and the Admin interface
+     credentials:
+         user:   "beef"
+-        passwd: "beef"
++        passwd: "password"
+ 
+     # Interface / IP restrictions
+     restrictions:
