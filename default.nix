@@ -23,6 +23,12 @@
   beef-xss = pkgs.callPackage ./pkgs/Beef-Xss { };
 
   distrobox = pkgs.callPackage ./pkgs/distrobox { };
+
+  rnote = pkgs.callPackage ./pkgs/rnote { };
+
+  wayfire-plugins-extra = pkgs.callPackage ./pkgs/wayfire-plugins-extra { };
+
+  blender-latest = pkgs.callPackage ./pkgs/blender-latest { };
   # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
   # ...
 }
