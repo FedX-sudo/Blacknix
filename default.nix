@@ -28,7 +28,10 @@
 
   wayfire-plugins-extra = pkgs.callPackage ./pkgs/wayfire-plugins-extra { };
 
+  lokinet = pkgs.callPackage ./pkgs/lokinet { };
+
   blender-latest = pkgs.callPackage ./pkgs/blender-latest { };
-  # some-qt5-package = pkgs.libsForQt5.callPackage ./pkgs/some-qt5-package { };
-  # ...
+
+  session-desktop = pkgs.callPackage ./pkgs/session-desktop { };
+
 }

@@ -43,11 +43,6 @@
 , pugixml
 , llvmPackages
 , SDL
-#, Cocoa
-#, CoreGraphics
-#, ForceFeedback
-#, OpenAL
-#, OpenGL
 , potrace
 , openxr-loader
 , embree
@@ -68,8 +63,6 @@ stdenv.mkDerivation rec {
     url = "https://download.blender.org/source/${pname}-${version}.tar.xz";
     sha256 = "sha256-HCbT0zz71EVlArBoegjE0cE6v4fHSm8bpwZ99pc5BLQ=";
   };
-
-  patches = lib.optional stdenv.isDarwin ./darwin.patch;
 
   nativeBuildInputs = [ cmake makeWrapper python310Packages.wrapPython llvmPackages.llvm.dev ];
   buildInputs =
@@ -124,24 +117,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     # allow usage of dynamically linked embree
     rm build_files/cmake/Modules/FindEmbree.cmake
-  '' +
-    (if stdenv.isDarwin then ''
-      : > build_files/cmake/platform/platform_apple_xcode.cmake
-      substituteInPlace source/creator/CMakeLists.txt \
-        --replace '${"$"}{LIBDIR}/python' \
-                  '${python}' \
-        --replace '${"$"}{LIBDIR}/openmp' \
-                  '${llvmPackages.openmp}'
-      substituteInPlace build_files/cmake/platform/platform_apple.cmake \
-        --replace '${"$"}{LIBDIR}/python' \
-                  '${python}' \
-        --replace '${"$"}{LIBDIR}/opencollada' \
-                  '${opencollada}' \
-        --replace '${"$"}{PYTHON_LIBPATH}/site-packages/numpy' \
-                  '${python39Packages.numpy}/${python.sitePackages}/numpy'
-    '' else ''
-      substituteInPlace extern/clew/src/clew.c --replace '"libOpenCL.so"' '"${ocl-icd}/lib/libOpenCL.so"'
-    '');
+  '';
 
   cmakeFlags =
     [
